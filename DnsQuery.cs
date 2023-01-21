@@ -34,7 +34,8 @@ namespace Bredd
                 var result = new List<string>();
 
                 Int32 hresult = DnsQuery(domainName, QueryTypes.DNS_TYPE_TEXT, QueryOptions.DNS_QUERY_RETURN_MESSAGE, IntPtr.Zero, ref pDnsRecord, IntPtr.Zero);
-                if (hresult == (Int32)DnsError.DNS_ERROR_RCODE_NAME_ERROR) return null;
+                if (hresult == (Int32)DnsError.DNS_ERROR_RCODE_NAME_ERROR
+                    || hresult == (Int32)DnsError.DNS_ERROR_RCODE_SERVER_FAILURE) return null;
                 if (hresult != 0) throw new Win32Exception(hresult);
 
                 IntPtr pCurrent = pDnsRecord;
